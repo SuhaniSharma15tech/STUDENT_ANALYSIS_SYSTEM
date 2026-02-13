@@ -1,0 +1,25 @@
+we have 2 models :
+a 8 feature based 5 persona model
+a 2 feature based 3 cluster model
+
+gender hasn't been used anywhere , once all models are ready we will anlayse genderwise results too , if we find something useful
+
+we can give results for raw csv
+we can give school wise summaries
+
+
+how do we do this
+Early signals of disengagement or struggle
+
+
+
+
+
+
+
+
+
+
+
+
+

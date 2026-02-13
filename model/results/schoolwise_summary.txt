@@ -1,0 +1,78 @@
+{
+  "public_school_clusters": [
+    {
+      "cluster_id": 0,
+      "label": "Strivers",
+      "metrics": {
+        "study_hours_normalized": 0.82,
+        "attendance_rate": 0.88,
+        "resource_access": 0.35,
+        "motivation_level": 0.79,
+        "average_exam_score": 72.4,
+        "wellbeing_index": 0.65
+      }
+    },
+    {
+      "cluster_id": 1,
+      "label": "At-Risk",
+      "metrics": {
+        "study_hours_normalized": 0.28,
+        "attendance_rate": 0.35,
+        "resource_access": 0.21,
+        "motivation_level": 0.22,
+        "average_exam_score": 58.2,
+        "wellbeing_index": 0.42
+      }
+    },
+    {
+      "cluster_id": 2,
+      "label": "Stable Middle",
+      "metrics": {
+        "study_hours_normalized": 0.51,
+        "attendance_rate": 0.72,
+        "resource_access": 0.44,
+        "motivation_level": 0.48,
+        "average_exam_score": 65.1,
+        "wellbeing_index": 0.58
+      }
+    }
+  ],
+  "private_school_clusters": [
+    {
+      "cluster_id": 0,
+      "label": "Elite Achievers",
+      "metrics": {
+        "study_hours_normalized": 0.89,
+        "attendance_rate": 0.95,
+        "resource_access": 0.88,
+        "motivation_level": 0.91,
+        "average_exam_score": 88.6,
+        "wellbeing_index": 0.78
+      }
+    },
+    {
+      "cluster_id": 1,
+      "label": "Passive Beneficiaries",
+      "metrics": {
+        "study_hours_normalized": 0.31,
+        "attendance_rate": 0.82,
+        "resource_access": 0.82,
+        "motivation_level": 0.25,
+        "average_exam_score": 68.4,
+        "wellbeing_index": 0.71
+      }
+    },
+    {
+      "cluster_id": 2,
+      "label": "High-Pressure",
+      "metrics": {
+        "study_hours_normalized": 0.92,
+        "attendance_rate": 0.98,
+        "resource_access": 0.85,
+        "motivation_level": 0.88,
+        "average_exam_score": 82.1,
+        "wellbeing_index": 0.32
+      }
+    }
+  ]
+}

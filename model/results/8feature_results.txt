@@ -1,0 +1,97 @@
+--------------------generic 8 feature clustering-------------------------
+{'cluster1': array([0.44068296, 0.76803797, 0.4636509 , 0.50033311, 0.48963191,
+       0.44770153, 0.51776593, 0.75194315]), 
+'cluster2': array([0.44565181, 0.28637191, 0.77933042, 0.36026201, 0.49517831,
+       0.43104076, 0.54144428, 0.74417758]), 
+'cluster3': array([0.44155739, 0.69383145, 0.49362294, 0.        , 0.4909137 ,
+       0.45417029, 0.52813978, 0.74326672]), 
+'cluster4': array([0.43556128, 0.49245068, 0.51207891, 1.        , 0.49268146,
+       0.43664643, 0.53637666, 0.74140111]), 
+'cluster5': array([0.44298367, 0.24214173, 0.23990499, 0.34085511, 0.49068026,
+       0.46060966, 0.53668514, 0.75072579])}
+
+
+------------------------------------------------------------------------------
+Final Centroids (5 Themes):
+Hours_Studied  Attendance  Previous_Scores  Motivation_Level  Resource_Access  Family_Capital  Personal_Wellbeing  Environmental_Stability
+
+
+{
+  "clusters": [
+    {
+      "id": 1,
+      "name": "The Disciplined Stalwarts",
+      "profile": "Consistent and reliable students with stable environments and healthy habits.",
+      "features": {
+        "attendance": 0.76,
+        "previous_scores": 0.68,
+        "motivation_level": 0.52,
+        "hours_studied": 0.61,
+        "sleep_hours": 0.75,
+        "parental_involvement": 0.64,
+        "access_to_resources": 0.70,
+        "tutoring_sessions": 0.40
+      }
+    },
+    {
+      "id": 2,
+      "name": "The Disengaged High-Potentials",
+      "profile": "Academically strong students who maintain high scores despite low institutional presence.",
+      "features": {
+        "attendance": 0.28,
+        "previous_scores": 0.78,
+        "motivation_level": 0.45,
+        "hours_studied": 0.55,
+        "sleep_hours": 0.60,
+        "parental_involvement": 0.35,
+        "access_to_resources": 0.72,
+        "tutoring_sessions": 0.30
+      }
+    },
+    {
+      "id": 3,
+      "name": "The Passive Passengers",
+      "profile": "Students who are physically present but lack internal drive and have low study engagement.",
+      "features": {
+        "attendance": 0.69,
+        "previous_scores": 0.48,
+        "motivation_level": 0.12,
+        "hours_studied": 0.32,
+        "sleep_hours": 0.58,
+        "parental_involvement": 0.42,
+        "access_to_resources": 0.50,
+        "tutoring_sessions": 0.15
+      }
+    },
+    {
+      "id": 4,
+      "name": "The Aspiring Grinders",
+      "profile": "Maximum effort and high motivation, though efficiency and resource access may be barriers.",
+      "features": {
+        "attendance": 0.52,
+        "previous_scores": 0.55,
+        "motivation_level": 0.95,
+        "hours_studied": 0.88,
+        "sleep_hours": 0.52,
+        "parental_involvement": 0.78,
+        "access_to_resources": 0.48,
+        "tutoring_sessions": 0.75
+      }
+    },
+    {
+      "id": 5,
+      "name": "The High-Support Priority Group",
+      "profile": "Vulnerable population with low metrics across the board; high risk of academic failure.",
+      "features": {
+        "attendance": 0.24,
+        "previous_scores": 0.23,
+        "motivation_level": 0.21,
+        "hours_studied": 0.18,
+        "sleep_hours": 0.40,
+        "parental_involvement": 0.22,
+        "access_to_resources": 0.30,
+        "tutoring_sessions": 0.10
+      }
+    }
+  ]
+}
