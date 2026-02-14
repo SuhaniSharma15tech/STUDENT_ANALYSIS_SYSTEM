@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 
 def mapped_scaled(df):
     """
@@ -39,7 +39,7 @@ def mapped_scaled(df):
 
     # 3. SCALING
     # Scale all numeric columns to 0-1 so K-Means isn't biased by large ranges (e.g. Previous_Scores vs Gender)
-    scaler = MinMaxScaler()
+    scaler = StandardScaler()
     numeric_cols = df_mapped.select_dtypes(include=[np.number]).columns
     df_mapped[numeric_cols] = scaler.fit_transform(df_mapped[numeric_cols])
     

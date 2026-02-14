@@ -49,7 +49,7 @@ def predict_ac(data3, centroid3):
 
     # 2. Iterate through the dataframe by index
     for index, row in data3.iterrows():
-        point = [row['Exam_Score'], row['Previous_Scores']]
+        point = [ row['Previous_Scores'],row['Exam_Score']]
         
         best_cluster = None
         min_dist = float('inf')
