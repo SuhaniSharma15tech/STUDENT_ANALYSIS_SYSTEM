@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectra</title>
+    <!-- custom css -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+   <!-- chart.js -->
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Spectra</h1>
+        <h3>"Understanding every student, in every dimension."</h3>
+    </header>
+
+    <!-- the analyse portion that's initially visible -->
+    <div id="mega_analysis">
+        <input type="file" id="csvFile" accept=".csv">
+        <button id="analyse" onclick="analyse_data()">Analyse data</button>
+    </div>
+    
+    <!-- the portion that's visible only after data has been analysed -->
+    <div id="post_analysis">
+            <!-- will display results from mega analysis -->
+             <div class="dashboard-grid">
+                <!-- 3 cluster pie chart -->
+                <div class="chart-container mega-chart-container">
+                    <h2>Academic Trajectory Composition (3 Clusters)</h2>
+                    <canvas id="academicPie"></canvas>
+                </div>
+                <!-- 5 cluster pie chart -->
+                <div class="chart-container mega-chart-container">
+                    <h2>Persona Wise Class Composition (5 Clusters)</h2>
+                    <canvas id="personaPie"></canvas>
+                </div>
+                    <div id="pie_insights" class="insights"></div>  
+ 
+            </div>
+            
+            <!-- trajectory wise composition of the class -->
+            <div class="section-title">Trajectory wise Composition of each Persona</div>
+            <div class="small-grid" id="trajectoryPersonaContainer"></div>
+            <div id="nested_insights" class="insights"></div>
+
+            <!-- spider charts -->
+            <div class="section-title">Persona Profiles (8-Feature Spider Charts)</div>
+            <div class="small-grid" id="spiderContainer"></div>
+            <div id="spider_insights" class="insights"></div>
+
+            
+        
+        <!-- the filters which can be toggled-->
+        <div class="toggle-buttons">
+            <button id="genderBtn" class="active">Analyse Based on Gender</button>
+            <button id="schoolBtn">Analyse Based on School Type</button>
+        </div>
+
+        <!-- the  gender filter-->
+         <div id="genderCardContainer" class="card">
+            <div id="genderCard" class="chart-container">
+            <!-- here we display the charts -->
+                <div class="chart-container">
+                    <h2>Gender Distribution by Persona</h2>
+                    <canvas id="genderPersonaBar"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Gender Distribution by Academic Trajectory</h2>
+                    <canvas id="genderAcademicBar"></canvas>
+                </div>
+            </div>
+            <div id="gender_insights" class="insights"></div>
+
+        </div>
+        
+        
+        <!-- the school type filter -->
+         <div id="schoolCardContainer" class="card active">
+            <div id="schoolCard" class="chart-container">
+                <!-- here we display the charts -->
+                <div class="chart-container">
+                    <h2>School Type by Persona</h2>
+                    <canvas id="schoolPersonaBar"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>School Type by Academic Trajectory</h2>
+                    <canvas id="schoolAcademicBar"></canvas>
+                </div>
+            </div>
+            <div id="school_insights" class="insights">
+         </div>  
+
+         </div>
+         
+         <!-- actions to be taken -->
+         <div id="actionable_insights">
+         <div class="section-title">Actionable Insights</div>
+         <div id="actionable_insights_content" class="insights">
+         </div>
+    </div>
+
+    
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- script for triggering the analysis and handling toggle logic -->
+    <script>
+
+        // the toggle logic
+        const genderBtn=document.getElementById("genderBtn");
+        const schoolBtn=document.getElementById("schoolBtn");
+        const genderCard=document.getElementById("genderCardContainer");
+        const schoolCard=document.getElementById("schoolCardContainer");
+
+        genderBtn.onclick = () =>{
+            genderBtn.classList.add("active");
+            genderCard.classList.add("active");
+            schoolBtn.classList.remove("active");
+            schoolCard.classList.remove("active");
+        }
+        schoolBtn.onclick = () =>{
+            genderBtn.classList.remove("active");
+            genderCard.classList.remove("active")
+            schoolBtn.classList.add("active");
+            schoolCard.classList.add("active");
+        }
+
+        async function analyse_data(){
+            const file=document.getElementById("csvFile").files[0];
+            const btn=document.getElementById("analyse");
+            // the btn thing is for giving visual feedback
+
+            if (!file) return alert("Please upload CSV");
+  
+            // Start Loading State
+            if(btn) {
+                btn.disabled = true;
+                btn.innerText = "⌛ Analysis On the Way...";
+            }
+
+            const fd = new FormData();
+            fd.append("csv_file", file);
+
+            try {
+                const response = await fetch("/analyze", { method: "POST", body: fd });
+                const data = await response.json();
+
+                // show the charts
+                render_charts(data);
+            } catch (err) {
+                console.error("Analysis failed", err);
+            } finally {
+                // Reset Button
+                if(btn) {
+                btn.disabled = false;
+                btn.innerText = "Analyse Data";
+                }
+            }
+        }
+    </script>
+
+
+</body>
+</html>
