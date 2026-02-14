@@ -1,0 +1,204 @@
+
+
+/* --- Root Variables for Spectra Theme --- */
+:root {
+    --primary: #6366f1; /* Spectra Indigo */
+    --secondary: #a855f7; /* Spectra Purple */
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* --- General Reset --- */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.5;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    
+    /* Standard property */
+    background-clip: text; 
+    
+    /* Vendor-specific properties for older browser support */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    margin-bottom: 0.5rem;
+}
+
+header h3 {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* --- Analysis Section (Upload) --- */
+#mega_analysis {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 500px;
+    margin: 0 auto 3rem;
+}
+
+button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-weight: 600;
+}
+
+#analyse {
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    width: 100%;
+}
+
+#analyse:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+#analyse:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* --- Visibility Logic --- */
+#post_analysis {
+    display: none; /* Controlled by script.js */
+}
+
+#schoolCard {
+    display: none; /* Initially hidden for toggle */
+}
+
+/* --- Grid Layouts --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.small-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* --- Chart Containers --- */
+.chart-container {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-title {
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 3rem 0 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+}
+
+h2 {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* --- Toggle Buttons --- */
+.toggle-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 4rem 0 2rem;
+}
+
+.toggle-buttons button {
+    padding: 0.6rem 1.5rem;
+    border-radius: 2rem;
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.toggle-buttons button.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* --- Flex Row for Gender Crads --- */
+#genderCard , #schoolCard {
+    display: flex; /* Add this line */
+    flex-direction: row; 
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+
+#genderCard .chart-container, 
+#schoolCard .chart-container {
+    flex: 1;
+    min-width: 400px;
+}
+
+.card{
+    display:none;
+}
+
+.card.active{
+    display:block;
+}
+
+.insights{
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-top: 2rem;   
+}
