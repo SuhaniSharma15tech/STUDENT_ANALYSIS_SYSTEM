@@ -88,8 +88,9 @@ Clusters students into:
 ## 🏫 School-Wise Academic Distribution
 
 ### Public vs Private School Performance
+<img width="1911" height="764" alt="image" src="https://github.com/user-attachments/assets/2e3115ea-b094-449a-b960-c73113b04ff8" />
 
-![Schoolwise 3 Cluster](schoolwise_summary_3cluster.png)
+
 
 **Insight Direction:**
 
@@ -101,7 +102,10 @@ Clusters students into:
 
 ## 🎭 8-Feature Persona Spider Charts
 
-![8 Feature Personas](schoolwise_8feature.jpeg)
+<img width="919" height="644" alt="image" src="https://github.com/user-attachments/assets/200d1a18-f5d7-427d-a0bc-7e1d523f2ae7" />
+
+
+
 
 Personas include:
 
@@ -121,7 +125,9 @@ Each centroid is analyzed via AI to generate:
 
 ## 👩‍🎓 Gender-Wise Academic Clustering
 
-![Genderwise 3 Cluster](genderwise_3cluster.png)
+<img width="890" height="546" alt="image" src="https://github.com/user-attachments/assets/cbc261d2-801d-483c-b927-4deb3d9989cd" />
+
+
 
 Breakdown:
 
@@ -139,7 +145,8 @@ Used to detect:
 
 ## 🎯 Gender-Wise 8-Feature Personas
 
-![Genderwise 8 Feature](gen_8feature.png)
+<img width="902" height="645" alt="image" src="https://github.com/user-attachments/assets/321d07c4-1800-477f-86ed-d6281e71b11a" />
+
 
 Persona distribution analyzed across gender categories to surface:
 
