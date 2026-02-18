@@ -1,0 +1,323 @@
+
+---
+
+# 🎓 Student Persona & Performance Analytics Dashboard
+
+> An AI-Augmented Educational Intelligence System that transforms raw student data into actionable personas, behavioral insights, and intervention strategies.
+
+
+
+## 📌 Overview
+
+Traditional academic reporting focuses only on scores.
+This project goes deeper.
+
+The **Student Persona & Performance Analytics Dashboard** dynamically clusters student data to uncover hidden behavioral patterns, detect early disengagement signals, and generate AI-powered intervention insights.
+
+It combines:
+
+* 📊 Statistical clustering (K-Means)
+* 🧠 AI-generated educational analysis (Google Gemini)
+* 📈 Interactive visualization dashboard
+* 🏫 School-wise & gender-wise breakdowns
+* 🎯 Persona-level strategic recommendations
+
+
+
+
+
+## 🚀 Why This Project Matters
+
+Educational institutions often miss:
+
+* Early disengagement signals
+* Behavioral drivers behind academic performance
+* Systemic gender or school-level disparities
+* Actionable persona-based intervention strategies
+
+This system transforms raw tabular data into:
+
+* Meaningful student personas
+* Academic trajectory clusters
+* Behavioral spider profiles
+* AI-driven strategic recommendations
+
+It acts as a lightweight **Educational Decision Intelligence Engine**.
+
+
+
+# 🧠 Models Used
+
+## 1️⃣ 8-Feature Persona Model (5 Personas)
+
+Clusters students based on behavioral + environmental factors:
+
+* Study Hours
+* Attendance
+* Resource Access
+* Motivation
+* Sleep Hours
+* Parental Involvement
+* Tutoring
+* Wellbeing
+* Exam Scores
+
+Outputs:
+
+* Persona centroids
+* Spider charts
+* AI-based persona interpretation
+* Actionable recommendations
+
+
+
+## 2️⃣ 2-Feature Academic Trajectory Model (3 Clusters)
+
+Clusters students into:
+
+* 🟢 High Achievers & Engaged
+* 🟡 Moderate / Average Performers
+* 🔴 At-Risk / Low Engagement
+
+
+
+# 📊 Dashboard Outputs
+
+
+
+## 🏫 School-Wise Academic Distribution
+
+### Public vs Private School Performance
+
+![Schoolwise 3 Cluster](schoolwise_summary_3cluster.png)
+
+**Insight Direction:**
+
+* Compare systemic distribution differences
+* Identify structural disparities
+* Understand institutional impact patterns
+
+---
+
+## 🎭 8-Feature Persona Spider Charts
+
+![8 Feature Personas](schoolwise_8feature.jpeg)
+
+Personas include:
+
+* Strivers
+* At-Risk
+* Stable Middle
+* Elite Achievers
+* Passive Beneficiaries
+* High-Pressure
+
+Each centroid is analyzed via AI to generate:
+
+* Behavioral interpretation
+* Hidden pattern detection
+* Tailored interventions
+
+
+## 👩‍🎓 Gender-Wise Academic Clustering
+
+![Genderwise 3 Cluster](genderwise_3cluster.png)
+
+Breakdown:
+
+* High Achievers
+* Moderate Performers
+* At-Risk Students
+
+Used to detect:
+
+* Performance skew
+* Engagement asymmetry
+* Structural participation gaps
+
+
+
+## 🎯 Gender-Wise 8-Feature Personas
+
+![Genderwise 8 Feature](gen_8feature.png)
+
+Persona distribution analyzed across gender categories to surface:
+
+* Behavioral divergence
+* Motivation trends
+* Support system gaps
+
+---
+
+# 🧠 AI-Powered Insight Engine
+
+After clustering:
+
+1. Dataset summary sent to Gemini API
+2. AI returns structured JSON including:
+
+```json
+{
+  "mega_pie_insights": "...",
+  "trajectory_wise_persona": "...",
+  "spider_chart_inferences": "...",
+  "gender_insights": "...",
+  "school_insights": "...",
+  "actionable_recommendations": "..."
+}
+```
+
+AI performs:
+
+* Non-obvious pattern detection
+* Persona naming & reasoning
+* Strategic intervention suggestions
+* Cross-dimensional analysis
+
+---
+
+# 🏗 System Architecture
+
+```
+CSV Upload
+   ↓
+Feature Engineering
+   ↓
+Elbow Method (Optimal K)
+   ↓
+K-Means Clustering
+   ↓
+Centroid Extraction
+   ↓
+Gemini API (Insight Generation)
+   ↓
+Structured JSON Response
+   ↓
+Dashboard Rendering
+```
+
+---
+
+# ⚙️ Tech Stack
+
+* Python
+* Flask
+* Pandas
+* NumPy
+* Scikit-learn
+* Requests
+* python-dotenv
+* Google Gemini API
+
+---
+
+# 📂 Project Structure
+
+```
+├── app.py
+├── agent.py
+├── utilities/
+│   └── analyze.py
+│   └── preprocessing.py
+│   └── preprocessing.py
+│    └── predict.py
+├── templates/
+│   └── index.html
+├── static/
+│   └── css/
+│        └── style.css
+│   └── js/
+│        └── script.js
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# 🛠 Installation
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone <your-repo-url>
+cd <repo-folder>
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3️⃣ Add Environment Variables
+
+Create a `.env` file:
+
+```
+GEMINI_API_KEY=your_api_key_here
+```
+
+---
+
+# ▶️ Running the App
+
+```bash
+python app.py
+```
+
+Open:
+
+```
+http://localhost:5000
+```
+
+Upload CSV → Click Analyze → View dashboard insights.
+
+---
+
+# 📈 Example Workflow
+
+1. Upload student dataset (20 structured columns)
+2. System clusters dynamically
+3. Persona centroids generated
+4. AI interprets behavioral patterns
+5. Dashboard displays:
+
+   * Distribution charts
+   * Spider plots
+   * Gender analysis
+   * School-wise breakdown
+   * Strategic interventions
+
+---
+
+# 🔮 Future Scope
+
+* 🎮 Scenario Simulator
+  Simulate feature changes and predict exam score shifts.
+
+* 🗺 Student Spatial Mapping
+  2D projection of students with clickable persona view.
+
+* 🚨 Early Disengagement Detection Module
+
+* 🔎 Outlier Detection (DBSCAN-based anomaly engine)
+
+* 🧑‍🏫 Context-Aware Educational Counselor
+
+---
+
+
+
+---
+
+# 👩‍💻 Contributors
+
+* Suhani Sharma
+* Ayushi Agrawal
+* Mayank
+* Neha Malhotra
+
+
+
+
