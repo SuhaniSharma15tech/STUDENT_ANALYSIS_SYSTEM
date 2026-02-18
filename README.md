@@ -190,11 +190,7 @@ CSV Upload
    ↓
 Feature Engineering
    ↓
-Elbow Method (Optimal K)
-   ↓
 K-Means Clustering
-   ↓
-Centroid Extraction
    ↓
 Gemini API (Insight Generation)
    ↓
@@ -270,12 +266,6 @@ GEMINI_API_KEY=your_api_key_here
 
 ```bash
 python app.py
-```
-
-Open:
-
-```
-http://localhost:5000
 ```
 
 Upload CSV → Click Analyze → View dashboard insights.
