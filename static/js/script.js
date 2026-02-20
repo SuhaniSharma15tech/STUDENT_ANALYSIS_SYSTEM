@@ -4,13 +4,23 @@ const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#C9CBCF'
 let chartInstances = {};
 
 function render_charts(rawData) {
-    // 1. Show the post-analysis section
     document.getElementById("post_analysis").style.display = "block";
 
-    // 2. Clear every existing chart instance before rendering new ones
+    // Clear existing instances
     Object.values(chartInstances).forEach(chart => chart.destroy());
     chartInstances = {}; 
 
+    // 1. BUILD THE COLOR MAP
+    // This assigns a permanent color to every unique label found in your data
+    const personaLabels = Object.keys(rawData.mega_pie.persona);
+    const trajectoryLabels = Object.keys(rawData.mega_pie.academic);
+    const allUniqueLabels = [...new Set([...personaLabels, ...trajectoryLabels])];
+    
+    const labelColorMap = {};
+    allUniqueLabels.forEach((label, index) => {
+        labelColorMap[label] = colors[index % colors.length];
+    });
+     
     // 3. Overall Academic Pie
     chartInstances['academicPie'] = new Chart(document.getElementById('academicPie'), {
         type: 'pie',
@@ -19,19 +29,23 @@ function render_charts(rawData) {
             datasets: [{ data: Object.values(rawData.mega_pie.academic), backgroundColor: colors }]
         }
     });
-
-    // 4. Overall Persona Pie
+    
+    // 3. Update Overall Persona Pie
     chartInstances['personaPie'] = new Chart(document.getElementById('personaPie'), {
         type: 'pie',
         data: {
-            labels: Object.keys(rawData.mega_pie.persona),
-            datasets: [{ data: Object.values(rawData.mega_pie.persona), backgroundColor: colors }]
+            labels: personaLabels,
+            datasets: [{ 
+                data: Object.values(rawData.mega_pie.persona), 
+                backgroundColor: personaLabels.map(l => labelColorMap[l]) // Map colors to labels
+            }]
         }
     });
 
-    // 5. Trajectory Composition per Persona (Dynamic Pie Charts)
+    // 4. Update Trajectory Composition per Persona
     const trajContainer = document.getElementById('trajectoryPersonaContainer');
-    trajContainer.innerHTML = ''; // Clear old containers
+    trajContainer.innerHTML = '';
+    
     Object.entries(rawData.trajectory_mapping).forEach(([persona, dist], i) => {
         const chartId = `traj-p-${i}`;
         const div = document.createElement('div');
@@ -39,11 +53,16 @@ function render_charts(rawData) {
         div.innerHTML = `<h2>${persona}: Trajectory Breakdown</h2><canvas id="${chartId}"></canvas>`;
         trajContainer.appendChild(div);
 
+        const currentLabels = Object.keys(dist);
+
         chartInstances[chartId] = new Chart(document.getElementById(chartId), {
             type: 'pie',
             data: {
-                labels: Object.keys(dist),
-                datasets: [{ data: Object.values(dist), backgroundColor: colors.slice(0, 3) }]
+                labels: currentLabels,
+                datasets: [{ 
+                    data: Object.values(dist), 
+                    backgroundColor: currentLabels.map(l => labelColorMap[l]) // Consistency across charts
+                }]
             }
         });
     });
