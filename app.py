@@ -13,8 +13,7 @@ load_dotenv()  # This specifically looks for the .env file in the current folder
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 
-app=Flask("__main__")
-
+app = Flask(__name__, template_folder='templates', static_folder='static')
 def get_ai_insights(data_summary):
     """
     Sends the data summary to Gemini API and returns structured JSON insights.
