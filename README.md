@@ -318,6 +318,14 @@ Upload CSV → Click Analyze → View dashboard insights.
 * Mayank
 * Neha Malhotra
 
+---
+# 🚀 Learn more here
+### View Video Explanation
+https://youtu.be/3x4ZoNOEJl0?si=m1HH97zRSbQB4VI-
+### View The app in action (Video Walkthrough)
+https://youtu.be/3x4ZoNOEJl0?si=m1HH97zRSbQB4VI-
+
+
 
 
 
