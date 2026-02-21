@@ -234,6 +234,9 @@ Dashboard Rendering
 ├── requirements.txt
 └── README.md
 ```
+---
+# View Deployed Service
+https://student-analysis-system.onrender.com
 
 ---
 
