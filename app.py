@@ -6,6 +6,9 @@ from flask import Flask,render_template,request,jsonify
 from utilities import analyze
 from dotenv import load_dotenv
 
+import hashlib
+analysis_cache = {} #cache to store results of previous analyses
+
 load_dotenv()  # This specifically looks for the .env file in the current folder
 
 # This pulls the key from Render's environment variables. 
@@ -84,14 +87,29 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze_data():
+
     file = request.files["csv_file"]
-    results = analyze.chart_ready(file) 
-    
-    # Generate AI insights based on the results
+    file_content = file.read()
+
+    file_hash = hashlib.md5(file_content).hexdigest()
+
+    # Check cache
+    if file_hash in analysis_cache:
+        print("Returning cached result")
+        return jsonify(analysis_cache[file_hash])
+
+    # Reset pointer so analyze can read file
+    file.seek(0)
+
+    results = analyze.chart_ready(file)
+
     ai_insights = get_ai_insights(results)
-    
-    # Merge insights into the main results object
-    results['AI_insights'] = ai_insights
+
+    results["AI_insights"] = ai_insights
+
+    # Store in cache
+    analysis_cache[file_hash] = results
+
     return jsonify(results)
 
 if __name__ == "__main__":
