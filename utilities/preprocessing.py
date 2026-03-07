@@ -19,11 +19,11 @@ def mapped_scaled(df):
         'Teacher_Quality': {'Low': 0, 'Medium': 1, 'High': 2},
         'Extracurricular_Activities': {'No': 0, 'Yes': 1},
         'Internet_Access': {'No': 0, 'Yes': 1},
-        'Learning_Disabilities': {'No': 0, 'Yes': 1},
-        'School_Type': {'Public': 0, 'Private': 1},
+        'Learning_Disabilities': {'No': 1, 'Yes': 0}, #no is better so 1 
+        'School_Type': {'Public': 0, 'Private': 1}, #these are categories
         'Peer_Influence': {'Negative': 0, 'Neutral': 1, 'Positive': 2},
-        'Gender': {'Male': 0, 'Female': 1},
-        'Distance_from_Home': {'Near': 2, 'Moderate': 1, 'Far': 0}, # Inverted: Near is better
+        'Gender': {'Male': 0, 'Female': 1}, #these are categories
+        'Distance_from_Home': {'Near': 2, 'Moderate': 1, 'Far': 0}, # Inverted so that Near is better
         'Parental_Education_Level': {'Basic': 0, 'High School': 1, 'College': 2, 'Postgraduate': 3}
     }
 
@@ -31,19 +31,8 @@ def mapped_scaled(df):
         if col in df_mapped.columns:
             df_mapped[col] = df_mapped[col].map(val_map)
 
-    # 2. FEATURE INVERSION 
-    # For columns where 'high' raw values are 'negative' for clustering (like Disabilities), 
-    # we flip them so 1.0 is always the 'positive/advantageous' side.
-    if 'Learning_Disabilities' in df_mapped.columns:
-        df_mapped['Learning_Disabilities'] = df_mapped['Learning_Disabilities'].apply(lambda x: 1 if x == 0 else 0)
-
-    # 3. SCALING
-    # Scale all numeric columns to 0-1 so K-Means isn't biased by large ranges (e.g. Previous_Scores vs Gender)
-    scaler = StandardScaler()
-    numeric_cols = df_mapped.select_dtypes(include=[np.number]).columns
-    df_mapped[numeric_cols] = scaler.fit_transform(df_mapped[numeric_cols])
-    
     return df_mapped
+
 
 def persona_reduction(df_mapped):
     """
@@ -59,9 +48,9 @@ def persona_reduction(df_mapped):
     reduced_df['Motivation_Level'] = df_mapped['Motivation_Level']
 
     # Theme 1: Resource Access (Socio-economic & School Tools)
-    # Mean of: Access to Resources, Internet, Tutoring, Income, Teacher Quality, School Type
+    # Mean of: Access to Resources, Internet, Tutoring, Income, Teacher Quality
     res_cols = ['Access_to_Resources', 'Internet_Access', 'Tutoring_Sessions', 
-                'Family_Income', 'Teacher_Quality', 'School_Type']
+                'Family_Income', 'Teacher_Quality']
     reduced_df['Resource_Access'] = df_mapped[res_cols].mean(axis=1)
 
     # Theme 2: Family Capital (Home Support)
@@ -75,6 +64,14 @@ def persona_reduction(df_mapped):
     # Theme 4: Environmental Stability (External Factors)
     env_cols = ['Peer_Influence', 'Distance_from_Home', 'Learning_Disabilities']
     reduced_df['Environmental_Stability'] = df_mapped[env_cols].mean(axis=1)
+    
+
+    
+    
+    # 2. GLOBAL MIN-MAX SCALING
+    # This squashes everything into a 0.0 to 1.0 range
+    scaler = StandardScaler()
+    reduced_df[reduced_df.columns] = scaler.fit_transform(reduced_df)
 
     return reduced_df
 
@@ -83,4 +80,12 @@ def academic_reduction(df_mapped):
     Step 2b: 2-Column Feature Reduction
     Focuses strictly on academic performance metrics.
     """
-    return df_mapped[['Previous_Scores', 'Exam_Score']].copy()
+
+    # Extract the two core academic columns
+    academic_df = df_mapped[['Previous_Scores', 'Exam_Score']].copy()
+    
+    # Apply Min-Max Scaling so both scores are between 0.0 and 1.0
+    scaler = StandardScaler()
+    academic_df[['Previous_Scores', 'Exam_Score']] = scaler.fit_transform(academic_df[['Previous_Scores', 'Exam_Score']])
+
+    return academic_df
