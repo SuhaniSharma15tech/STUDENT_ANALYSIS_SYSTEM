@@ -93,26 +93,33 @@ function render_charts(rawData) {
         const avgScore = rawData.persona_averages[personaName] || 0;
 
         card.innerHTML = `
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 1rem;">${personaName} Traits</h2>
-                    <div style="flex-grow: 1; position: relative; width: 100%;">
-                        <canvas id="spider-${index}"></canvas>
-                    </div>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Click to view score</p>
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <div style="text-align: center; margin-bottom: 0.5rem;">
+                    <h2 style="font-size: 1.1rem; margin: 0; color: var(--text-main);">${personaName}</h2>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin: 2px 0;">Relative to Class Average</p>
                 </div>
                 
-                <div class="flip-card-back">
-                    <h2 style="color: white; margin-bottom: 5px;">${personaName}</h2>
-                    <p style="opacity: 0.9;">Average Performance</p>
-                    <div style="font-size: 4rem; font-weight: 800; margin: 20px 0;">${avgScore}%</div>
-                    <div style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.85rem;">
-                        ${rawData.is_predicted ? "Predicted Exam Score" : "average exam score of this persona"}
-                    </div>
+                <div style="flex: 1; min-height: 0; width: 100%;">
+                    <canvas id="spider-${index}"></canvas>
+                </div>
+                
+                <p style="font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-top: 5px;">
+                    <span style="color: var(--primary); font-weight: bold;">↑</span> Strengths | 
+                    <span style="color: #ef4444; font-weight: bold;">↓</span> Deficits
+                </p>
+            </div>
+            
+            <div class="flip-card-back">
+                <h2 style="color: white; margin-bottom: 5px;">${personaName}</h2>
+                <p style="opacity: 0.9; font-size: 0.9rem;">Average Performance</p>
+                <div style="font-size: 3rem; font-weight: 800; margin: 10px 0;">${avgScore}%</div>
+                <div style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">
+                    ${rawData.is_predicted ? "Model Prediction" : "Actual Class Average"}
                 </div>
             </div>
+        </div>
         `;
-
         spiderContainer.appendChild(card);
 
         // Toggle Flip
