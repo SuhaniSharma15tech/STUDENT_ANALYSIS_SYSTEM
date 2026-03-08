@@ -255,16 +255,42 @@ canvas {
     transform: rotateY(180deg);
 }
 
-.flip-card-front, .flip-card-back {
+/* Ensure the front face matches the chart-container aesthetic exactly */
+.flip-card-front {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    border-radius: 1.2rem;
+    
+    /* Layout alignment */
     position: absolute;
-    inset: 0; /* Pins to all four corners */
+    inset: 0;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem; /* Slightly tighter padding for the smaller height */
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    box-sizing: border-box; /* Crucial for consistent sizing */
+}
+
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 1.2rem;
-    /* Ensure the back starts rotated so the flip completes the 180 */
-    transform: rotateX(0deg); 
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    transform: rotateY(180deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; /* Match the front face */
 }
 
 .flip-card-back {
@@ -272,4 +298,3 @@ canvas {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
 }
-
