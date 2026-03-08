@@ -1,13 +1,18 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+# included for linear regression
+import os
+import joblib
 
 def mapped_scaled(df):
-    """
-    Step 1: Universal Preprocessing
-    Numerically maps categorical strings and scales all 20 columns to a 0-1 range.
-    """
+    #numerical encoding
     df_mapped = df.copy()
+
+    # Fill missing values with the most common value for each column before mapping
+    for col in ['Teacher_Quality', 'Parental_Education_Level', 'Distance_from_Home']:
+        if col in df_mapped.columns:
+            df_mapped[col] = df_mapped[col].fillna(df_mapped[col].mode()[0])
     
     # 1. CATEGORICAL MAPPING
     # We map these so that higher numbers generally represent 'more' of a trait
@@ -80,12 +85,39 @@ def academic_reduction(df_mapped):
     Step 2b: 2-Column Feature Reduction
     Focuses strictly on academic performance metrics.
     """
+    
+    # predict scores for beginning of sem analysis (when 19 col are given) and use Exam_Score column if it's already given
+    was_predicted=False
+    if 'Exam_Score' not in df_mapped.columns or df_mapped['Exam_Score'].isnull().all():
+        # FIND THE MODEL:
+        # __file__ is 'utilities/preprocessing.py'
+        # base_dir will be the 'utilities' folder
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        model_path = os.path.join(base_dir, 'regression_model.pkl')
+        
+        was_predicted = True
 
+        if os.path.exists(model_path):
+            model = joblib.load(model_path)
+
+            # The model was trained without 'Gender' and 'School_Type'
+            # We must drop them to match the feature input shape (17 columns)
+            cols_to_drop = ['Gender', 'School_Type']
+            X_input = df_mapped.drop(columns=[c for c in cols_to_drop if c in df_mapped.columns])
+            
+            # Ensure no other extra columns (like Target if it was all NaNs) are present
+            if 'Exam_Score' in X_input.columns:
+                X_input = X_input.drop(columns=['Exam_Score'])
+                
+            df_mapped['Exam_Score'] = model.predict(X_input)
+        else:
+            raise FileNotFoundError(f"Model file '{model_path}' not found. Cannot predict missing Exam_Score.")
+    
     # Extract the two core academic columns
     academic_df = df_mapped[['Previous_Scores', 'Exam_Score']].copy()
     
-    # Apply Min-Max Scaling so both scores are between 0.0 and 1.0
+    # Apply Standard Scaling
     scaler = StandardScaler()
     academic_df[['Previous_Scores', 'Exam_Score']] = scaler.fit_transform(academic_df[['Previous_Scores', 'Exam_Score']])
 
-    return academic_df
+    return academic_df,was_predicted
