@@ -216,9 +216,21 @@ canvas {
 /* Ensure the container has 3D depth */
 .spider-flip-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    perspective: 1500px; /* Perspective belongs on the parent or the card */
+    /* Forces exactly 3 columns on larger screens */
+    grid-template-columns: repeat(3, minmax(300px, 1fr)); 
+    gap: 2.5rem;
+    padding: 1.5rem 0;
+    width: 100%;
+    /* Centers the 2 cards on the bottom row */
+    justify-content: center; 
+    perspective: 1200px;
+}
+
+/* Responsive adjustment: for tablets/smaller screens, go to 2 columns or 1 */
+@media (max-width: 1024px) {
+    .spider-flip-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
 }
 
 .flip-card {
