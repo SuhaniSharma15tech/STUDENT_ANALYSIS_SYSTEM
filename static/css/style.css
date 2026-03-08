@@ -202,3 +202,74 @@ canvas {
     box-shadow: var(--shadow);
     margin-top: 2rem;   
 }
+
+#mode{
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-top: 2rem; 
+    margin-bottom: 2rem;
+}
+
+
+
+/* experimental */
+/* 1. The Grid: Stable and rigid */
+.spider-flip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+    width: 100%;
+    /* Perspective here defines the 3D 'depth' of the scene */
+    perspective: 1200px; 
+}
+
+/* 2. The Anchor: This element never moves, preventing layout shifts */
+.flip-card {
+    height: 480px; 
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+}
+
+/* 3. The Flipper: This rotates around its own center */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    transform-origin: center center; /* Critical: prevents the 'shifting' */
+}
+
+.flip-card.is-flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* 4. The Faces: Pinned exactly to the corners of the Anchor */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    inset: 0; /* Pins to top, left, right, bottom: 0 */
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
