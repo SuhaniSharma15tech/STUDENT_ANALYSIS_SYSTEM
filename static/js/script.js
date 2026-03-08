@@ -4,8 +4,22 @@ const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#C9CBCF'
 let chartInstances = {};
 
 function render_charts(rawData) {
+    // make everything visible
     document.getElementById("post_analysis").style.display = "block";
 
+    //  display mode of analysis
+    const isPredicted = rawData.is_predicted;
+    let modeText = "";
+    // 2. Determine the text based on the flag
+    if (isPredicted) {
+        modeText = "Pre Sem Analysis ";
+    } else {
+        modeText = "Post Exam Analysis ";
+    }
+    document.getElementById("mode").innerHTML=`<h2>${modeText}</h2>`
+
+// 3. Update the HTML
+// Make sure you have an element with id="mode" in your HTML
     // Clear existing instances
     Object.values(chartInstances).forEach(chart => chart.destroy());
     chartInstances = {}; 
@@ -68,28 +82,70 @@ function render_charts(rawData) {
     });
 
     // 6. Persona Profiles (Dynamic Spider Charts)
-    const spiderContainer = document.getElementById('spiderContainer');
-    spiderContainer.innerHTML = ''; // Clear old containers
-    Object.entries(rawData.spider).forEach(([persona, features], i) => {
-        const chartId = `spider-${i}`;
-        const div = document.createElement('div');
-        div.className = 'chart-container';
-        div.innerHTML = `<h2>${persona} Profile</h2><canvas id="${chartId}"></canvas>`;
-        spiderContainer.appendChild(div);
+    const spiderContainer = document.getElementById("spiderContainer");
+    spiderContainer.innerHTML = ""; 
 
-        chartInstances[chartId] = new Chart(document.getElementById(chartId), {
+    Object.entries(rawData.spider).forEach(([personaName, features], index) => {
+        const card = document.createElement("div");
+        card.className = "flip-card";
+        
+        // Get score from backend
+        const avgScore = rawData.persona_averages[personaName] || 0;
+
+        card.innerHTML = `
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h2 style="font-size: 1.1rem; margin-bottom: 1rem;">${personaName} Traits</h2>
+                    <div style="flex-grow: 1; position: relative; width: 100%;">
+                        <canvas id="spider-${index}"></canvas>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Click to view score</p>
+                </div>
+                
+                <div class="flip-card-back">
+                    <h2 style="color: white; margin-bottom: 5px;">${personaName}</h2>
+                    <p style="opacity: 0.9;">Average Performance</p>
+                    <div style="font-size: 4rem; font-weight: 800; margin: 20px 0;">${avgScore}%</div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.85rem;">
+                        ${rawData.is_predicted ? "Predicted Exam Score" : "average exam score of this persona"}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        spiderContainer.appendChild(card);
+
+        // Toggle Flip
+        card.addEventListener("click", () => {
+            card.classList.toggle("is-flipped");
+        });
+
+        // Initialize Chart
+        const ctx = document.getElementById(`spider-${index}`).getContext("2d");
+        chartInstances[`spider-${index}`] = new Chart(ctx, {
             type: 'radar',
             data: {
                 labels: Object.keys(features),
                 datasets: [{
-                    label: 'Z-Score',
                     data: Object.values(features),
-                    backgroundColor: 'rgba(99, 102, 241, 0.2)', // Indigo theme
-                    borderColor: '#6366f1',
-                    pointBackgroundColor: '#6366f1'
+                    backgroundColor: labelColorMap[personaName] + '44',
+                    borderColor: labelColorMap[personaName],
+                    borderWidth: 2,
+                    pointBackgroundColor: labelColorMap[personaName]
                 }]
             },
-            options: { scales: { r: { min: -1.5, max: 2.0 } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        ticks: { display: false },
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
         });
     });
 
@@ -175,3 +231,4 @@ function format_insight_text(text) {
     html += '</ul>';
     return html;
 }
+
