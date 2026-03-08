@@ -56,7 +56,7 @@ def get_complete_analysis(input_csv):
     persona_clusters = predict.predict_pc(reduced_persona_df, CENTROID5)
     
     # ------------------ Academic Wise Predictions (K=3) ------------------------
-    reduced_academic_df = preprocessing.academic_reduction(mapped_scaled_df)
+    reduced_academic_df,was_predicted = preprocessing.academic_reduction(mapped_scaled_df)
     academic_clusters = predict.predict_ac(reduced_academic_df, CENTROID3)
 
     # Create an index-to-persona map for trajectory cross-referencing
@@ -64,11 +64,22 @@ def get_complete_analysis(input_csv):
     for p_name, indices in persona_clusters.items():
         for idx in indices:
             idx_to_persona[idx] = p_name
+    
+    # average score of each persona
+    persona_averages={}
+    for cluster_name, indices in persona_clusters.items():
+        if len(indices) > 0:
+            avg_score = mapped_scaled_df.iloc[indices]['Exam_Score'].mean()
+            persona_averages[cluster_name] = round(float(avg_score), 2)
+        else:
+            persona_averages[cluster_name] = 0
 
     analysis_results = {
         "persona_segmentation": {},
         "academic_segmentation": {},
-        "trajectory_persona_mapping": {}
+        "trajectory_persona_mapping": {},
+        "is_predicted":was_predicted,
+        "persona_exam_averages": persona_averages
     }
 
     # Analyze Demographic distribution for Personas
@@ -142,7 +153,9 @@ def chart_ready(input_csv):
         "spider": spider,
         "gender_summary": gender_summary,
         "school_summary": school_summary,
-        "trajectory_mapping": result["trajectory_persona_mapping"]
+        "trajectory_mapping": result["trajectory_persona_mapping"],
+        "is_predicted":result["is_predicted"],
+        "persona_averages": result["persona_exam_averages"]
     }
 
 # print(chart_ready("rawdata.csv"))
